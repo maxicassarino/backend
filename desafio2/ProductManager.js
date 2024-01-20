@@ -103,21 +103,14 @@ const productManager = new ProductManager(filePath);
     await productManager.iniciar();
 
     await productManager.addProduct({
-        title: 'Producto prueba 3',
-        description: 'Descripción Producto prueba 3',
+        title: 'Zapatillas',
+        description: 'Zapatillas blancas',
         price: 100,
         thumbnail: 'imagen.jpg',
-        code: 'codigo3',
-        stock: 10,
+        code: 'zapatilla01',
+        stock: 5,
     });
-    await productManager.addProduct({
-        title: 'Producto prueba 4',
-        description: 'Descripción Producto prueba 4',
-        price: 140,
-        thumbnail: 'imagen.jpg',
-        code: 'codigo4',
-        stock: 15,
-    });
+    
 
     console.log(await productManager.getProducts());
 

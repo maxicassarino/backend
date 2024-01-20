@@ -4,7 +4,7 @@
   "description": "",
   "main": "ProductManager.js",
   "scripts": {
-    "start": "nodemon ProductManager.js"
+    "start": "node ProductManager.js"
   },
   "keywords": [],
   "author": "",
