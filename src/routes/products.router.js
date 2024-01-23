@@ -1,9 +1,13 @@
-const express = require("express")
+import express from 'express'
+
+const router = express.Router()
+
 const fs = require("fs/promises");
 
-const app = express()
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
-const filePath = '../desafio2/productos.json';
+const filePath = 'src/productos.json';
 
 const lectura = async () => {
     try {
@@ -16,7 +20,7 @@ const lectura = async () => {
 };
 
 
-app.get('/products', async (req, res) => {
+router.get('/products', async (req, res) => {
     try {
         const productos = await lectura();
         let limite = parseInt(req.query.limit);
@@ -32,7 +36,7 @@ app.get('/products', async (req, res) => {
 });
 
 
-app.get('/products/:id', async (req, res) => {
+router.get('/products/:id', async (req, res) => {
     try {
         const productos = await lectura();
         const productoId = req.params.id;
@@ -46,6 +50,3 @@ app.get('/products/:id', async (req, res) => {
         console.error("Error al obtener producto por ID: ", error);
     }
 });
-
-const PORT = 8080;
-app.listen(PORT, () => console.log(`Server funcionando en puerto ${PORT}`));

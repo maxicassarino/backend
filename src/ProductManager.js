@@ -96,7 +96,7 @@ class ProductManager {
     }
 }
 
-const filePath = 'productos.json';
+const filePath = 'src/productos.json';
 const productManager = new ProductManager(filePath);
 
 (async () => {
