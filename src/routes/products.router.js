@@ -1,11 +1,11 @@
 import express from 'express'
+import fs from "fs/promises";
 
 const router = express.Router()
 
-const fs = require("fs/promises");
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+router.use(express.json())
+router.use(express.urlencoded({extended: true}))
 
 const filePath = 'src/productos.json';
 
@@ -50,3 +50,5 @@ router.get('/products/:id', async (req, res) => {
         console.error("Error al obtener producto por ID: ", error);
     }
 });
+
+export default router
