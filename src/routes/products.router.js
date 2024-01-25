@@ -19,10 +19,13 @@ const lectura = async () => {
     }
 };
 
+const productos = await lectura();
+
+
+// Endpoints
 
 router.get('/products', async (req, res) => {
     try {
-        const productos = await lectura();
         let limite = parseInt(req.query.limit);
         if (!isNaN(limite) && limite > 0) {
             const productosLimitados = productos.slice(0, limite);
@@ -38,9 +41,8 @@ router.get('/products', async (req, res) => {
 
 router.get('/products/:id', async (req, res) => {
     try {
-        const productos = await lectura();
         const productoId = req.params.id;
-        let producto = productos.find((p) => p.id == productoId);
+        let producto = listadoProductos.find((p) => p.id == productoId);
         if (producto) {
             return res.send(producto);
         } else {
@@ -50,5 +52,17 @@ router.get('/products/:id', async (req, res) => {
         console.error("Error al obtener producto por ID: ", error);
     }
 });
+
+
+router.post('/products', async (req, res) => {
+    try {
+        const nuevoProducto = req.body
+        productos.push(nuevoProducto)
+        res.json({message: "Producto agregado correctamente."})
+    } catch (error) {
+        console.error("Error al agregar producto: ", error);
+    }
+});
+
 
 export default router
