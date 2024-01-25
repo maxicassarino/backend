@@ -35,7 +35,7 @@ class ProductManager {
     }
 
     async addProduct(product) {
-        if (product.title && product.description && product.price && product.thumbnail && product.code && product.stock) {
+        if (product.title && product.description && product.category && product.price && product.thumbnail && product.code && product.stock && product.status) {
             // Verificar código no duplicado
             let found = this.products.find((p) => p.code === product.code);
             if (!found) {
@@ -105,10 +105,12 @@ const productManager = new ProductManager(filePath);
     await productManager.addProduct({
         title: 'Zapatillas',
         description: 'Zapatillas blancas',
+        category: 'Calzado',
         price: 100,
         thumbnail: 'imagen.jpg',
         code: 'zapatilla01',
         stock: 5,
+        status: true
     });
     
 

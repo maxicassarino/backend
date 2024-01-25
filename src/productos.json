@@ -2,46 +2,56 @@
   {
     "title": "Remera",
     "description": "Remera roja con lineas blancas",
+    "category": "Prenda",
     "price": 100,
     "thumbnail": "imagen.jpg",
     "code": "remera01",
     "stock": 10,
+    "status": true,
     "id": 1
   },
   {
     "title": "Pantalon",
     "description": "Pantalon negro",
+    "category": "Prenda",
     "price": 140,
     "thumbnail": "imagen.jpg",
     "code": "pantalon01",
     "stock": 6,
+    "status": true,
     "id": 2
   },
   {
     "title": "Zapatillas",
     "description": "Zapatillas blancas",
+    "category": "Calzado",
     "price": 100,
     "thumbnail": "imagen.jpg",
     "code": "zapatilla01",
     "stock": 5,
+    "status": true,
     "id": 3
   },
   {
     "title": "Gorra",
     "description": "Gorra gris",
+    "category": "Accesorio",
     "price": 140,
     "thumbnail": "imagen.jpg",
     "code": "gorra01",
     "stock": 2,
+    "status": true,
     "id": 4
   },
   {
     "title": "Cadena",
     "description": "Cadena de plata",
+    "category": "Accesorio",
     "price": 140,
     "thumbnail": "imagen.jpg",
     "code": "cadena01",
     "stock": 1,
+    "status": true,
     "id": 5
   }
 ]
