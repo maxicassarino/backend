@@ -4,11 +4,13 @@ import multer from 'multer';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import productRouter from "./routes/products.router.js"
+import cartRouter from './routes/cart.router.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const app = express()
+
 
 // Middlewares
 
@@ -16,9 +18,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 
+
 // Rutas
 
 app.use("/", productRouter)
+app.use("/", cartRouter)
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
@@ -27,6 +31,7 @@ app.get("/", (req, res) => {
 app.get("/descargas", (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'uploadFiles.html'))
 })
+
 
 // Descargas
 
@@ -46,6 +51,9 @@ const upload = multer({storage})
 app.post("/upload", upload.single("file"), (req, res) => {
     res.send({message: "Archivo subido"})
 })
+
+
+// Puerto
 
 const PORT = 8080;
 

@@ -19,6 +19,7 @@ const lectura = async () => {
     }
 };
 
+
 const productos = await lectura();
 
 
