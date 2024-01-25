@@ -66,6 +66,7 @@ router.post('/products', async (req, res) => {
     }
 });
 
+
 router.put('/products/:id', async (req, res) => {
     try {
         const productoId = req.params.id;
@@ -73,6 +74,22 @@ router.put('/products/:id', async (req, res) => {
         if (producto) {
             Object.assign(producto, req.body);
             return res.send("Producto actualizado.");
+        } else {
+            return res.send("Producto no encontrado.");
+        }
+    } catch (error) {
+        console.error("Error al obtener producto por ID: ", error);
+    }
+});
+
+
+router.delete('/products/:id', async (req, res) => {
+    try {
+        const productoId = req.params.id;
+        let producto = productos.find((p) => p.id == productoId);
+        if (producto) {
+            productos.splice(productoId-1, 1)
+            return res.send("Producto eliminado.");
         } else {
             return res.send("Producto no encontrado.");
         }
