@@ -21,10 +21,10 @@ router.get('/cart', async (req, res) => {
 
 router.get('/cart/:id', async (req, res) => {
     try {
-        const productoCarritoId = req.params.id;
-        let producto = carrito.find((p) => p.id == productoCarritoId);
-        if (producto) {
-            return res.send(producto);
+        const carritoId = req.params.id;
+        let usuario = carrito.find((p) => p.id == carritoId);
+        if (usuario) {
+            return res.send(usuario.Productos);
         } else {
             return res.send("Producto no encontrado en el carrito.");
         }
@@ -36,10 +36,29 @@ router.get('/cart/:id', async (req, res) => {
 
 router.post('/cart', async (req, res) => {
     try {
-        const nuevoProducto = req.body
-        let nuevoProductoCarrito = {id: carrito.length + 1, Producto: nuevoProducto};
-        carrito.push(nuevoProductoCarrito)
-        res.json({message: "Producto agregado correctamente al carrito."})
+        const usuariosCarrito = {id: carrito.length + 1, Productos: []};
+        carrito.push(usuariosCarrito)
+        res.json({message: "Carrito creado correctamente."})
+    } catch (error) {
+        console.error("Error al crear carrito: ", error);
+    }
+});
+
+
+router.post('/cart/:cid/:pid', async (req, res) => {
+    try {
+        const carritoId = req.params.cid;
+        let productoID = req.params.pid
+        let quantity = req.body.quantity
+        let index = carrito.findIndex((u) => u.id == carritoId);
+        if (index !== -1) {
+            const nuevoProducto = {id: parseInt(productoID), quantity: parseInt(quantity)}
+            const usuario = carrito[index];
+            usuario.Productos.push(nuevoProducto);
+            carrito[index] = usuario;
+        } else {
+            return res.send("ID no encontrado en el carrito.");
+        }
     } catch (error) {
         console.error("Error al agregar producto al carrito: ", error);
     }
