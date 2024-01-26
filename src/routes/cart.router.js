@@ -49,12 +49,17 @@ router.post('/cart/:cid/:pid', async (req, res) => {
     try {
         const carritoId = req.params.cid;
         let productoID = req.params.pid
-        let quantity = req.body.quantity
+        let quantity = parseInt(req.body.quantity)
         let index = carrito.findIndex((u) => u.id == carritoId);
         if (index !== -1) {
-            const nuevoProducto = {id: parseInt(productoID), quantity: parseInt(quantity)}
             const usuario = carrito[index];
-            usuario.Productos.push(nuevoProducto);
+            const productoExistente = usuario.Productos.findIndex((p) => p.id == productoID);
+            if (productoExistente !== -1) {
+                usuario.Productos[productoExistente].quantity += quantity;
+            } else {
+                const nuevoProducto = { id: parseInt(productoID), quantity: quantity };
+                usuario.Productos.push(nuevoProducto);
+            }
             carrito[index] = usuario;
         } else {
             return res.send("ID no encontrado en el carrito.");
