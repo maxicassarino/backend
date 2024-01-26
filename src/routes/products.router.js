@@ -71,9 +71,9 @@ router.post('/products', async (req, res) => {
 router.put('/products/:id', async (req, res) => {
     try {
         const productoId = req.params.id;
-        let producto = productos.find((p) => p.id == productoId);
-        if (producto) {
-            Object.assign(producto, req.body);
+        let index = productos.findIndex((p) => p.id == productoId);
+        if (index !== -1) {
+            productos[index] = { ...req.body, id: parseInt(productoId) };
             return res.send("Producto actualizado.");
         } else {
             return res.send("Producto no encontrado.");
