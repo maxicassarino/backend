@@ -29,10 +29,49 @@ class CartManager {
         return this.carts;
     }
 
-    async addCart(cart) {
-        this.carts.push(cart);
+    getCartById(cartId) {
+        const cart = this.carts.find((cart) => cart.id === cartId);
+
+        if (cart) {
+            return cart;
+        } else {
+            console.error('Carrito no encontrado.');
+            return null;
+        }
+    }
+
+    async createCart() {
+        const maxId = Math.max(...this.carts.map(cart => cart.id), 0);
+        const newId = maxId + 1;
+        
+        this.carts.push({"id": newId, "Productos": []});
+        
         await this.escribir();
-        console.log('Carrito agregado exitosamente.');
+        console.log('Carrito creado exitosamente.');
+    }
+
+    async addToCart(cartId, productId, quantity) {
+        const cartIndex = this.carts.findIndex((cart) => cart.id === cartId);
+
+        if (cartIndex !== -1) {
+            const productIndex = this.carts[cartIndex].Productos.findIndex((product) => product.Id === productId);
+
+            if (productIndex !== -1) {
+                // Si el producto ya existe en el carrito, se actualiza
+                this.carts[cartIndex].Productos[productIndex].Quantity += quantity;
+            } else {
+                // Si el producto no existe en el carrito, se agrega
+                this.carts[cartIndex].Productos.push({
+                    "Id": productId,
+                    "Quantity": quantity
+                });
+            }
+
+            await this.escribir();
+            console.log('Producto agregado al carrito exitosamente.');
+        } else {
+            console.error('Carrito no encontrado para agregar el producto.');
+        }
     }
 
     async updateCart(cartId, updatedData) {
