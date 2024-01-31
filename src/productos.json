@@ -11,13 +11,13 @@
     "id": 1
   },
   {
-    "title": "Pantalon",
-    "description": "Pantalon negro",
-    "category": "Prenda",
-    "price": 140,
+    "title": "Borcegos",
+    "description": "Borcegos negros",
+    "category": "Calzado",
+    "price": 100,
     "thumbnail": "imagen.jpg",
-    "code": "pantalon01",
-    "stock": 6,
+    "code": "borcego01",
+    "stock": 5,
     "status": true,
     "id": 2
   },
@@ -53,5 +53,16 @@
     "stock": 1,
     "status": true,
     "id": 5
+  },
+  {
+    "title": "Camisa",
+    "description": "Camisa verde",
+    "category": "Prenda",
+    "price": 100,
+    "thumbnail": "imagen.jpg",
+    "code": "camisa01",
+    "stock": 10,
+    "status": true,
+    "id": 6
   }
 ]
