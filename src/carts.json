@@ -20,5 +20,14 @@
   {
     "id": 3,
     "Productos": []
+  },
+  {
+    "id": 4,
+    "Productos": [
+      {
+        "Id": 2,
+        "Quantity": 5
+      }
+    ]
   }
 ]

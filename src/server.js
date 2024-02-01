@@ -1,12 +1,13 @@
 import express from 'express';
 import path from 'path'
-import multer from 'multer';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import multer from 'multer';
+import handlebars from 'express-handlebars'
+import { Server } from 'socket.io';
 import productRouter from "./routes/products.router.js"
 import cartRouter from './routes/cart.router.js'
-import ProductManager from './ProductManager.js';
-import CartManager from './CartManager.js';
+import viewsRouter from './routes/views.router.js'
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -19,16 +20,14 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '/publicSocket')))
 
 
-// Iniciar
+// Handlebars
 
-
-const productManager = new ProductManager('src/productos.json');
-const cartManager = new CartManager('./src/carts.json');
-
-
+app.engine("handlebars", handlebars.engine())
+app.set("views", __dirname + '/views')
+app.set('view engine', "handlebars")
 
 
 // Rutas
@@ -43,6 +42,7 @@ app.get('/', (req, res) => {
 app.get('/descargas', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'uploadFiles.html'));
 });
+
 
 // Descargas
 
@@ -63,9 +63,22 @@ app.post('/upload', upload.single('file'), (req, res) => {
     res.send({ message: 'Archivo subido' });
 });
 
+
 // Puerto
 
 const PORT = 8080;
-app.listen(PORT, () => console.log(`Server funcionando en puerto ${PORT}`));
+const httpServer = app.listen(PORT, () => console.log(`Server funcionando en puerto ${PORT}`));
 
 
+// Socket.io
+
+const socketServer = new Server(httpServer)
+
+app.use('/', viewsRouter)
+
+socketServer.on('connection', socket => {
+    console.log("Nueva Conexión")
+    socket.on('message', data => {
+        console.log(data)
+    })
+})
