@@ -40,6 +40,7 @@ app.use('/', productRouter);
 app.use('/', cartRouter);
 app.use('/', viewsRouter)
 
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
