@@ -10,6 +10,24 @@
 <body>
     <section>
         <h1>Lista de Productos en Tiempo Real</h1>
+        {{!-- <form id="productForm" onsubmit="submitProductForm(event)">
+            <label for="productName">Nombre del Producto:</label>
+            <input type="text" id="productName" required>
+
+            <label for="productDescription">Descripción del Producto:</label>
+            <input type="text" id="productDescription" required>
+
+            <label for="productPrice">Precio del Producto:</label>
+            <input type="text" id="productPrice" required>
+
+            <label for="action">Acción:</label>
+            <select id="action" required>
+                <option value="add">Agregar</option>
+                <option value="delete">Eliminar</option>
+            </select>
+
+            <button type="submit">Enviar</button>
+        </form> --}}
         <ol id="productList">
             {{#each productos}}
                 <li>{{this.title}}</li>

@@ -85,4 +85,18 @@ socketServer.on('connection', socket => {
     socket.on('message', data => {
         console.log(data)
     })
-})
+    // socket.on('addProduct', (product) => {
+    //     try {
+    //         socketServer.emit('productAdded', product);
+    //     } catch (error) {
+    //         console.error('Error al agregar producto:', error.message);
+    //     }
+    // });
+    // socket.on('deleteProduct', (product) => {
+    //     try {
+    //         socketServer.emit('productDeleted', product);
+    //     } catch (error) {
+    //         console.error('Error al eliminar producto:', error.message);
+    //     }
+    // });
+});
