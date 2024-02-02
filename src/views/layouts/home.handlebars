@@ -6,7 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>WebSockets</h1>
+    <section>
+        <h1>Lista de Productos</h1>
+        <ul>
+            {{#each productos}}
+                <li>{{this.nombre}} - Precio: ${{this.precio}}</li>
+            {{/each}}
+        </ul>
+    </section>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/index.js"></script>

@@ -25,15 +25,20 @@ app.use(express.static(path.join(__dirname, '/publicSocket')))
 
 // Handlebars
 
-app.engine("handlebars", handlebars.engine())
-app.set("views", __dirname + '/views')
-app.set('view engine', "handlebars")
+app.engine("handlebars", handlebars.engine({
+    extname: 'handlebars',
+    defaultLayout: 'home',
+    layoutsDir: path.join(__dirname, 'views', 'layouts')
+}));
+app.set("views", __dirname + '/views');
+app.set('view engine', "handlebars");
 
 
 // Rutas
 
 app.use('/', productRouter);
 app.use('/', cartRouter);
+app.use('/', viewsRouter)
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
@@ -73,8 +78,6 @@ const httpServer = app.listen(PORT, () => console.log(`Server funcionando en pue
 // Socket.io
 
 const socketServer = new Server(httpServer)
-
-app.use('/', viewsRouter)
 
 socketServer.on('connection', socket => {
     console.log("Nueva Conexión")
