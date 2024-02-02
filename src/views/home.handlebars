@@ -8,12 +8,19 @@
 <body>
     <section>
         <h1>Lista de Productos</h1>
-        <ul>
+        <ol>
             {{#each productos}}
-                <li>{{this.nombre}} - Precio: ${{this.precio}}</li>
+                <li>{{this.title}}</li>
+                <br>
+                <ul>
+                    <li>{{this.description}}</li>
+                    <li>Precio: ${{this.price}}</li>
+                </ul>
+                <br>
             {{/each}}
-        </ul>
+        </ol>
     </section>
+
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/index.js"></script>

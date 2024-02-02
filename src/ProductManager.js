@@ -9,10 +9,10 @@ class ProductManager {
 
     async iniciar() {
         try {
-            // Leer datos del archivo y asignar a la lista de productos
+            // Leer datos del archivo
             const data = await fs.readFile(this.path, 'utf-8');
             this.products = JSON.parse(data);
-            // Encontrar el ID más alto para mantener la coherencia con el último ID asignado
+            // Encontrar el ID mas alto para asignar el ultimo ID
             const maxId = Math.max(...this.products.map(product => product.id), 0);
             this.id = maxId;
             console.log("Archivo productos.json leido correctamente.")
@@ -54,11 +54,10 @@ class ProductManager {
             // Verificar código no duplicado
             let found = this.products.find((p) => p.code === product.code);
             if (!found) {
-                // Mover el incremento de ID aquí
                 this.id++;
                 product.id = this.id;
                 this.products.push(product);
-                await this.escribir(); // Guardar cambios en el archivo
+                await this.escribir(); // Guarda cambios
                 console.log("Producto agregado exitosamente.");
             } else {
                 console.error("El código está repetido. No se ha agregado el producto.");
@@ -72,11 +71,11 @@ class ProductManager {
         let index = this.products.findIndex((product) => product.id === id);
         if (index !== -1) {
             if (typeof updatedData === 'object' && updatedData !== null) {
-                // Verificar que el nuevo código no exista en otros productos
+                // Verificar que el nuevo código no exista
                 if (updatedData.code && this.products.some((p) => p.code === updatedData.code && p.id !== id)) {
                     console.error("El código está repetido.");
                 } else {
-                    // Actualizar campos individuales y guardar cambios
+                    // Actualiza campos y guarda cambios
                     this.products[index] = {
                         ...this.products[index],
                         ...updatedData
@@ -106,7 +105,7 @@ class ProductManager {
     clearProducts() {
         this.products = [];
         this.id = 0;
-        this.escribir(); // Guardar cambios en el archivo al vaciar la lista
+        this.escribir(); // Guardar cambios en el archivo 
         console.log('Lista de productos vaciada exitosamente.');
     }
 }

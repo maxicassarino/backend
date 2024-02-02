@@ -1,68 +1,46 @@
 [
   {
-    "title": "Remera",
-    "description": "Remera roja con lineas blancas",
+    "title": "Camiseta",
+    "description": "Camiseta de futbol",
     "category": "Prenda",
-    "price": 100,
+    "price": 150,
     "thumbnail": "imagen.jpg",
-    "code": "remera01",
-    "stock": 10,
+    "code": "camiseta01",
+    "stock": 5,
     "status": true,
     "id": 1
   },
   {
-    "title": "Borcegos",
-    "description": "Borcegos negros",
-    "category": "Calzado",
-    "price": 100,
+    "title": "Campera",
+    "description": "Campera de invierno",
+    "category": "Abrigo",
+    "price": 200,
     "thumbnail": "imagen.jpg",
-    "code": "borcego01",
-    "stock": 5,
+    "code": "campera01",
+    "stock": 2,
     "status": true,
     "id": 2
   },
   {
     "title": "Zapatillas",
-    "description": "Zapatillas blancas",
+    "description": "Zapatillas Nike",
     "category": "Calzado",
-    "price": 100,
+    "price": 150,
     "thumbnail": "imagen.jpg",
     "code": "zapatilla01",
-    "stock": 5,
+    "stock": 6,
     "status": true,
     "id": 3
   },
   {
-    "title": "Gorra",
-    "description": "Gorra gris",
-    "category": "Accesorio",
-    "price": 140,
-    "thumbnail": "imagen.jpg",
-    "code": "gorra01",
-    "stock": 2,
-    "status": true,
-    "id": 4
-  },
-  {
-    "title": "Cadena",
-    "description": "Cadena de plata",
-    "category": "Accesorio",
-    "price": 140,
-    "thumbnail": "imagen.jpg",
-    "code": "cadena01",
-    "stock": 1,
-    "status": true,
-    "id": 5
-  },
-  {
-    "title": "Camisa",
-    "description": "Camisa verde",
+    "title": "Short",
+    "description": "Short blanco",
     "category": "Prenda",
     "price": 100,
     "thumbnail": "imagen.jpg",
-    "code": "camisa01",
-    "stock": 10,
+    "code": "short01",
+    "stock": 5,
     "status": true,
-    "id": 6
+    "id": 4
   }
 ]

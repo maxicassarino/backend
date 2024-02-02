@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, '/publicSocket')))
 
 app.engine("handlebars", handlebars.engine({
     extname: 'handlebars',
-    defaultLayout: 'home',
+    defaultLayout: false,
     layoutsDir: path.join(__dirname, 'views', 'layouts')
 }));
 app.set("views", __dirname + '/views');
