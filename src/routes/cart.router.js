@@ -77,8 +77,7 @@ router.get('/cart/:id', async (req, res) => {
 
 router.post('/cart', async (req, res) => {
     try {
-        let {productos} = []
-        let result = await cartsModel.create({productos})
+        let result = await cartsModel.create({})
         res.send({result: "success", payload: result})
     } catch (error) {
         console.error("Error al crear carrito: ", error);
