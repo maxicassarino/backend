@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 class CartManager {
     constructor() {
         this.carts = [];
-        this.path = 'src/carts.json';
+        this.path = 'src/json/carts.json';
     }
 
     async iniciar() {

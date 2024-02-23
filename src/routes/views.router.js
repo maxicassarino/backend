@@ -1,5 +1,5 @@
 import express from "express";
-import ProductManager from '../ProductManager.js'; 
+import ProductManager from '../manager/ProductManager.js'; 
 
 const router = express.Router()
 
@@ -9,7 +9,7 @@ router.use(express.json())
 router.use(express.urlencoded({extended: true}))
 
 
-router.get('/home', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         await productManager.iniciar();
         const productos = await productManager.getProducts();

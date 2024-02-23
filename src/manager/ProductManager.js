@@ -4,7 +4,7 @@ class ProductManager {
     constructor() {
         this.products = [];
         this.id = 0;
-        this.path = 'src/productos.json';
+        this.path = 'src/json/productos.json';
     }
 
     async iniciar() {

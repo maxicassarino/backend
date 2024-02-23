@@ -5,6 +5,8 @@ import { dirname } from 'path';
 import multer from 'multer';
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io';
+import mongoose from 'mongoose';
+import ProductManager from './manager/ProductManager.js';
 import productRouter from "./routes/products.router.js"
 import cartRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
@@ -20,7 +22,7 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, '/publicSocket')))
+app.use(express.static(path.join(__dirname, '/public')))
 
 
 // Handlebars
@@ -40,13 +42,8 @@ app.use('/', productRouter);
 app.use('/', cartRouter);
 app.use('/', viewsRouter)
 
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-});
-
 app.get('/descargas', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'uploadFiles.html'));
+    res.sendFile(path.join(__dirname, '..', 'uploadFiles.html'));
 });
 
 
@@ -79,24 +76,42 @@ const httpServer = app.listen(PORT, () => console.log(`Server funcionando en pue
 // Socket.io
 
 const socketServer = new Server(httpServer)
+const productManager = new ProductManager();
 
-socketServer.on('connection', socket => {
+socketServer.on('connection', async (socket) => {
     console.log("Nueva Conexión")
-    socket.on('message', data => {
-        console.log(data)
-    })
-    // socket.on('addProduct', (product) => {
-    //     try {
-    //         socketServer.emit('productAdded', product);
-    //     } catch (error) {
-    //         console.error('Error al agregar producto:', error.message);
-    //     }
-    // });
-    // socket.on('deleteProduct', (product) => {
-    //     try {
-    //         socketServer.emit('productDeleted', product);
-    //     } catch (error) {
-    //         console.error('Error al eliminar producto:', error.message);
-    //     }
-    // });
+
+    sendUpdatedProducts(socket)
+
+    async function sendUpdatedProducts(socket) {
+        try {
+            const updatedProducts = await productManager.getProducts()
+            socket.emit('updateProducts', updatedProducts)
+        } catch (error) {
+            console.error("Internal server error", error)
+            socket.emit('updateProducts', [])
+        }
+    }
+
+    //Logic for save 
+
+    socket.on('addProduct', async (newProductData) => {
+        try {
+            const result = await productManager.addProduct(newProductData)
+            socket.emit('productAdded', result)
+            sendUpdatedProducts(socketServer)
+        } catch (error) {
+            console.error('Internal server error', error)
+        }})
 });
+
+
+// MONGOOUSE
+
+mongoose.connect("mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/shop?retryWrites=true&w=majority&appName=coder")
+    .then(()=>{
+        console.log("Conectado a Base de Datos")
+    })
+    .catch(error=>{
+        console.log("Error al conectarse a Base de Datos: ", error)
+    })
