@@ -13,34 +13,34 @@
         <form action="/products" method="post" id="newProduct" target="_self">
             <label for="title">Producto</label>
             <input type="text" name="title">
-            <label for="description">Descripción</label>
-            <input type="text" name="description">
             <label for="category">Categoría</label>
             <input type="text" name="category">
             <label for="price">Precio</label>
             <input type="number" name="price">
-            <label for="thumbnail">Imagen</label>
-            <input type="text" name="thumbnail">
-            <label for="code">Código</label>
-            <input type="text" name="code">
             <label for="stock">Stock</label>
             <input type="number" name="stock">
-            <label for="status">Status</label>
-            <input type="text" name="status">
             <button type="submit">Agregar Producto</button>
         </form>
         <h1>Lista de Productos en Tiempo Real</h1>
         <ol id="productList">
-            {{#each productos}}
+            {{#each products}}
                 <li>{{this.title}}</li>
                 <br>
                 <ul>
-                    <li>{{this.description}}</li>
+                    <li>{{this.category}}</li>
                     <li>Precio: ${{this.price}}</li>
                 </ul>
                 <br>
             {{/each}}
         </ol>
+        <div>
+            {{#if hasPrevPage}}
+                <a href={{prevLink}}>Anterior</a>
+            {{/if}} &nbsp; {{page}} &nbsp;
+            {{#if hasNextPage}}
+                <a href={{nextLink}}>Siguiente</a>
+            {{/if}}
+        </div>
     </section>
 
     <script src="/socket.io/socket.io.js"></script>

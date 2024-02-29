@@ -10,16 +10,24 @@
         <h1>Inicio</h1>
         <h2>Lista de Productos</h2>
         <ol>
-            {{#each productos}}
+            {{#each products}}
                 <li>{{this.title}}</li>
                 <br>
                 <ul>
-                    <li>{{this.description}}</li>
+                    <li>{{this.category}}</li>
                     <li>Precio: ${{this.price}}</li>
                 </ul>
                 <br>
             {{/each}}
         </ol>
+        <div>
+            {{#if hasPrevPage}}
+                <a href={{prevLink}}>Anterior</a>
+            {{/if}} &nbsp; {{page}} &nbsp;
+            {{#if hasNextPage}}
+                <a href={{nextLink}}>Siguiente</a>
+            {{/if}}
+        </div>
     </section>
 
 

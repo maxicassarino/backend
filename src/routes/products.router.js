@@ -81,11 +81,11 @@ router.get('/products/:id', async (req, res) => {
 
 router.post('/products', async (req, res) => {
     try {
-        let {title, price, stock} = req.body
-        if (!title || !price || !stock) {
+        let {title, category, price, stock} = req.body
+        if (!title || !category || !price || !stock) {
             res.send({status: " Error", error: "Faltan datos"})
         } 
-        let result = await productsModel.create({title, price, stock})
+        let result = await productsModel.create({title, category, price, stock})
         res.send({result: "success", payload: result})
     } catch (error) {
         console.error("Error al agregar producto: ", error);
@@ -110,7 +110,7 @@ router.put('/products/:id', async (req, res) => {
     try {
         let {id} = req.params
         let product = req.body
-        if (!product.title || !product.price || !product.stock) {
+        if (!product.title || !product.category || !product.price || !product.stock) {
             res.send({status: " Error", error: "Faltan datos"})
         } 
         let result = await productsModel.updateOne({_id: id}, product)

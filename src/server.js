@@ -108,10 +108,8 @@ socketServer.on('connection', async (socket) => {
 
 // MONGOOUSE
 
-mongoose.connect("mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/shop?retryWrites=true&w=majority&appName=coder")
-    .then(()=>{
-        console.log("Conectado a Base de Datos")
-    })
-    .catch(error=>{
-        console.log("Error al conectarse a Base de Datos: ", error)
-    })
+const enviroment = async () => {
+    await mongoose.connect("mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/shop?retryWrites=true&w=majority&appName=coder")
+    console.log("Conectado a Base de Datos")
+}
+enviroment()
