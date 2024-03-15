@@ -10,6 +10,9 @@ import ProductManager from './manager/ProductManager.js';
 import productRouter from "./routes/products.router.js"
 import cartRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
+import usersRouter from './routes/users.router.js';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -36,11 +39,25 @@ app.set("views", __dirname + '/views');
 app.set('view engine', "handlebars");
 
 
+// Cookies
+
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: "mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/sessions?retryWrites=true&w=majority&appName=coder",
+        ttl: 60
+    }),
+    secret: "12345",
+    resave: false,
+    saveUninitialized: false
+}));
+
+
 // Rutas
 
 app.use('/', productRouter);
 app.use('/', cartRouter);
-app.use('/', viewsRouter)
+app.use('/', viewsRouter);
+app.use('/', usersRouter);
 
 app.get('/descargas', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'uploadFiles.html'));

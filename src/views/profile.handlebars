@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+</head>
+
+<body>
+    <section>
+        <h1>Perfil</h1>
+        <ul>
+            <li>Nombre: {{user.name}}</li>
+            <li>Apellido: {{user.lastname}}</li>
+            <li>Email: {{user.email}}</li>
+            {{#if isAdmin}}
+                <li>Rol: Administrador</li>
+            {{else}}
+                <li>Rol: Usuario</li>
+            {{/if}}
+        </ul>
+        <a href="/">Lista de Productos</a>
+        <form action="/logout" method="post">
+            <button type="submit">Cerrar sesión</button>
+        </form>
+    </section>
+</body>
+
+</html>

@@ -36,23 +36,7 @@ router.get('/', async (req, res) => {
             };
         });
 
-        res.render('home', { products, hasPrevPage: result.hasPrevPage, page, hasNextPage: result.hasNextPage, prevLink: result.prevLink, nextLink: result.nextLink });
-
-        let responseObject = {
-            status: 'success',
-            payload: result.docs,
-            totalPages: result.totalPages,
-            prevPage: result.prevPage,
-            nextPage: result.nextPage,
-            page: result.page,
-            hasPrevPage: result.hasPrevPage,
-            hasNextPage: result.hasNextPage,
-            prevLink: result.prevLink || null,
-            nextLink: result.nextLink || null
-        };
-
-        // Imprimir el objeto en formato JSON por consola
-        console.log(JSON.stringify(responseObject, null, 4));
+        res.render('home', { products, hasPrevPage: result.hasPrevPage, page, hasNextPage: result.hasNextPage, prevLink: result.prevLink, nextLink: result.nextLink, user: req.session.user });
 
     } catch (error) {
         console.error("Error al obtener productos en tiempo real: ", error);
@@ -82,6 +66,7 @@ router.get('/realtimeproducts', async (req, res) => {
         });
 
         res.render('realTimeProducts', { products, hasPrevPage: result.hasPrevPage, page: page, hasNextPage: result.hasNextPage, prevLink: result.prevLink, nextLink: result.nextLink });
+    
     } catch (error) {
         console.error("Error al obtener productos en tiempo real: ", error);
         res.status(500).json({ error: 'Error al obtener productos en tiempo real.' });

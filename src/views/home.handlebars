@@ -7,7 +7,9 @@
 </head>
 <body>
     <section>
-        <h1>Inicio</h1>
+        {{#if user}}
+            <h1>Bienvenido, {{user.name}}!</h1>
+        {{/if}}
         <h2>Lista de Productos</h2>
         <ol>
             {{#each products}}
@@ -28,6 +30,12 @@
                 <a href={{nextLink}}>Siguiente</a>
             {{/if}}
         </div>
+        <br>
+        <a href="/profile">Perfil</a>
+        <br>
+        <form action="/logout" method="post">
+            <button type="submit">Cerrar sesión</button>
+        </form>
     </section>
 
 
