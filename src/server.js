@@ -6,13 +6,15 @@ import multer from 'multer';
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io';
 import mongoose from 'mongoose';
-import ProductManager from './manager/ProductManager.js';
 import productRouter from "./routes/products.router.js"
 import cartRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
 import usersRouter from './routes/users.router.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import passport from 'passport';
+import initializePassport from './public/js/passport.config.js';
+import cookieParser from 'cookie-parser';
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -50,6 +52,13 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+// Passport
+
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 
 // Rutas
@@ -93,33 +102,9 @@ const httpServer = app.listen(PORT, () => console.log(`Server funcionando en pue
 // Socket.io
 
 const socketServer = new Server(httpServer)
-const productManager = new ProductManager();
 
 socketServer.on('connection', async (socket) => {
     console.log("Nueva Conexión")
-
-    sendUpdatedProducts(socket)
-
-    async function sendUpdatedProducts(socket) {
-        try {
-            const updatedProducts = await productManager.getProducts()
-            socket.emit('updateProducts', updatedProducts)
-        } catch (error) {
-            console.error("Internal server error", error)
-            socket.emit('updateProducts', [])
-        }
-    }
-
-    //Logic for save 
-
-    socket.on('addProduct', async (newProductData) => {
-        try {
-            const result = await productManager.addProduct(newProductData)
-            socket.emit('productAdded', result)
-            sendUpdatedProducts(socketServer)
-        } catch (error) {
-            console.error('Internal server error', error)
-        }})
 });
 
 

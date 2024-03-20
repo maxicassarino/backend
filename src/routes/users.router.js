@@ -1,5 +1,7 @@
 import express from 'express';
 import usersModel from '../model/users.model.js';
+import { createHash, isValidatePassword } from '../public/js/utils.js';
+import passport from 'passport';
 
 const router = express.Router()
 
@@ -8,39 +10,27 @@ router.use(express.json())
 router.use(express.urlencoded({extended: true}))
 
 
-// Middleware para rutas públicas
-const publicRouteMiddleware = (req, res, next) => {
-    if (req.session && req.session.user) {
-        // Si hay una sesión activa, redirige al perfil
-        res.redirect('/profile');
-    } else {
-        // Si no hay una sesión activa, continuar con la siguiente ruta
-        next();
-    }
-};
-
-// Middleware para rutas privadas
-const privateRouteMiddleware = (req, res, next) => {
-    if (!req.session.user) {
-        // Si no hay una sesión activa, redirige al login
-        res.redirect('/login');
-    } else {
-        // Si hay una sesión activa, continuar con la siguiente ruta
-        next();
-    }
-};
-
-
 // Endpoints
 
 
-router.get('/profile', privateRouteMiddleware, async (req, res) => {
+router.get('/profile', async (req, res) => {
     try {
-        // Renderiza con los datos del usuario
-        res.render('profile', { 
-            user: req.session.user,
-            isAdmin: req.session.user.email === 'adminCoder@coder.com' && req.session.user.password === 'adminCod3r123'
-        });
+        if (!req.session.user) {
+            // Si no hay una sesión activa, redirige al login
+            return res.redirect('/login');
+        }
+        const isAdmin = req.session.user.email === 'adminCoder@coder.com';
+        // Verifica si el usuario es admin 
+        if (isAdmin && isValidatePassword(req.session.user, 'adminCod3r123')) {
+            res.render('profile', { 
+                user: req.session.user,
+                isAdmin: true
+            });
+        } else {
+            res.render('profile', { 
+                user: req.session.user,
+                isAdmin: false
+        })}
     } catch (error) {
         console.error("Error al obtener usuario: ", error);
         res.status(500).json({ error: 'Error al obtener usuario.' });
@@ -48,27 +38,35 @@ router.get('/profile', privateRouteMiddleware, async (req, res) => {
 });
 
 
-router.get('/login', publicRouteMiddleware, (req, res) => {
+router.get('/login', (req, res) => {
+    if (req.session && req.session.user) {
+        // Si hay una sesión activa, redirige al perfil
+        return res.redirect('/profile?error=activeSession')
+    } else {
     res.render('login');
-});
+}});
 
 
-router.get('/register', publicRouteMiddleware, (req, res) => {
+router.get('/register', (req, res) => {
+    if (req.session && req.session.user) {
+        // Si hay una sesión activa, redirige al perfil
+        return res.redirect('/profile?error=activeSession')
+    } else {
     res.render('register');
-});
+}});
 
 
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         // Verifica si el usuario existe
-        const user = await usersModel.findOne({ email, password });
-        if (!user) {
-            return res.redirect('/register');
+        const user = await usersModel.findOne({ email });
+        if (!user || !isValidatePassword(user, password)) {
+            return res.redirect('/register?error=login');
         }
         // Guarda el usuario en la sesión
         req.session.user = user;
-        res.redirect('/profile');
+        res.redirect('/profile?success=login');
     } catch (error) {
         console.error("Error al iniciar sesión: ", error);
         res.status(500).json({ error: 'Error al iniciar sesión.' });
@@ -76,28 +74,38 @@ router.post('/login', async (req, res) => {
 });
 
 
-router.post('/register', publicRouteMiddleware, async (req, res) => {
-    try {
-        const { name, lastname, email, password } = req.body;
-        // Verifica si el usuario ya existe
-        const existingUser = await usersModel.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ error: 'El usuario ya existe' });
-        }
-        // Crea un nuevo usuario
-        let result = await usersModel.create({name, lastname, email, password})
-        res.redirect('/profile');
-    } catch (error) {
-        console.error("Error al registrar usuario: ", error);
-        res.status(500).json({ error: 'Error al registrar usuario.' });
-    }
+router.post('/register', passport.authenticate('register', {failureRedirect: '/register?error=register'}), async (req, res) => {
+    res.redirect('/login?success=register');
 });
 
 
 router.post('/logout', (req, res) => {
     req.session.destroy(() => {
-        res.redirect('/login');
+        res.redirect('/login?success=logout');
     });
+});
+
+
+router.get('/reset-password', (req, res) => {
+    res.render('reset-password');
+});
+
+
+router.post('/reset-password', async (req, res) => {
+    try {
+        const { email, newPassword } = req.body;
+        const user = await usersModel.findOne({ email });
+        if (!user) {
+            return res.redirect('/login?error=userNotFound');
+        }
+        user.password = createHash(newPassword);
+        await user.save();
+        // Redirigir a la página de login con un mensaje de éxito
+        res.redirect('/login?success=passwordReset');
+    } catch (error) {
+        console.error("Error al restaurar contraseña: ", error);
+        res.status(500).json({ error: 'Error al restaurar contraseña.' });
+    }
 });
 
 
