@@ -1,76 +1,66 @@
-import productsModel from '../model/products.model.js';
+import productService from '../services/productsService.js';
+
+const productsController = {};
 
 
-const getProducts = async (req, res) => {
+productsController.getProducts = async (req, res) => {
     try {
-        let products = await productsModel.find();
-        res.send({ result: "success", payload: products });
+        const products = await productService.getProducts();
+        res.json({ success: true, data: products });
     } catch (error) {
-        console.error("Error al obtener productos: ", error);
-        res.status(500).json({ error: 'Error al obtener productos.' });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
 
-const getProductById = async (req, res) => {
+productsController.getProductById = async (req, res) => {
     try {
-        let { id } = req.params;
-        let result = await productsModel.findOne({ _id: id });
-        res.send({ result: "success", payload: result });
+        // Obtiene el ID del producto del parámetro
+        const { id } = req.params;
+        const product = await productService.getProductById(id);
+        res.json({ success: true, data: product });
     } catch (error) {
-        console.error("Error al obtener producto por ID: ", error);
-        res.status(500).json({ error: 'Error al obtener producto por ID.' });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
 
-const createProduct = async (req, res) => {
+productsController.createProduct = async (req, res) => {
     try {
-        let { title, category, price, stock } = req.body;
-        if (!title || !category || !price || !stock) {
-            return res.status(400).json({ error: "Faltan datos." });
-        }
-        let result = await productsModel.create({ title, category, price, stock });
-        res.send({ result: "success", payload: result });
+        // Obtiene los datos del nuevo producto del body
+        const { title, category, price, stock } = req.body;
+        const newProduct = await productService.createProduct(title, category, price, stock);
+        res.json({ success: true, data: newProduct });
     } catch (error) {
-        console.error("Error al agregar producto: ", error);
-        res.status(500).json({ error: 'Error al agregar producto.' });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
 
-const updateProductById = async (req, res) => {
+productsController.updateProductById = async (req, res) => {
     try {
-        let { id } = req.params;
-        let product = req.body;
-        if (!product.title || !product.category || !product.price || !product.stock) {
-            return res.status(400).json({ error: "Faltan datos." });
-        }
-        let result = await productsModel.updateOne({ _id: id }, product);
-        res.send({ result: "success", payload: result });
+        // Obtiene el ID del producto del parámetro
+        const { id } = req.params;
+        // Obtiene los datos del nuevo producto del body
+        const product = req.body;
+        const result = await productService.updateProductById(id, product);
+        res.json({ success: true, data: result });
     } catch (error) {
-        console.error("Error al actualizar producto por ID: ", error);
-        res.status(500).json({ error: 'Error al actualizar producto por ID.' });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
 
-const deleteProductById = async (req, res) => {
+productsController.deleteProductById = async (req, res) => {
     try {
-        let { id } = req.params;
-        let result = await productsModel.deleteOne({ _id: id });
-        res.send({ result: "success", payload: result });
+        // Obtiene el ID del producto del parámetro
+        const { id } = req.params;
+        const result = await productService.deleteProductById(id);
+        res.json({ success: true, data: result });
     } catch (error) {
-        console.error("Error al eliminar producto por ID: ", error);
-        res.status(500).json({ error: 'Error al eliminar producto por ID.' });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
 
-export default {
-    getProducts,
-    getProductById,
-    createProduct,
-    updateProductById,
-    deleteProductById
-};
+export default productsController;
