@@ -1,0 +1,4 @@
+PORT = 3000
+MONGOURL = mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/sessions?retryWrites=true&w=majority&appName=coder
+ADMINNAME = coderAdmin
+ADMINPASSWORD = coder123

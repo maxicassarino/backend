@@ -29,7 +29,7 @@ router.get('/profile', async (req, res) => {
         } else {
             res.render('profile', { 
                 user: req.session.user,
-                isAdmin: false
+                isAdmin: false,
         })}
     } catch (error) {
         console.error("Error al obtener usuario: ", error);
@@ -56,21 +56,9 @@ router.get('/register', (req, res) => {
 }});
 
 
-router.post('/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        // Verifica si el usuario existe
-        const user = await usersModel.findOne({ email });
-        if (!user || !isValidatePassword(user, password)) {
-            return res.redirect('/register?error=login');
-        }
-        // Guarda el usuario en la sesión
-        req.session.user = user;
-        res.redirect('/profile?success=login');
-    } catch (error) {
-        console.error("Error al iniciar sesión: ", error);
-        res.status(500).json({ error: 'Error al iniciar sesión.' });
-    }
+router.post('/login', passport.authenticate('login', {failureRedirect: '/register?error=login'}), async (req, res) => {
+    req.session.user = req.user;
+    res.redirect('/profile?success=login');
 });
 
 
@@ -106,6 +94,15 @@ router.post('/reset-password', async (req, res) => {
         console.error("Error al restaurar contraseña: ", error);
         res.status(500).json({ error: 'Error al restaurar contraseña.' });
     }
+});
+
+
+router.get('/github', passport.authenticate('github', {failureRedirect: '/login?error=GithubLogin'}), async (req, res) => {});
+
+
+router.get('/githubcallback', passport.authenticate('github', {scope: ['user:email']}), async (req, res) => {
+    req.session.user = req.user;
+    res.redirect('/profile?success=login');
 });
 
 

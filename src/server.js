@@ -43,6 +43,7 @@ app.set('view engine', "handlebars");
 
 // Cookies
 
+app.use(cookieParser());
 app.use(session({
     store: MongoStore.create({
         mongoUrl: "mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/sessions?retryWrites=true&w=majority&appName=coder",
@@ -55,9 +56,9 @@ app.use(session({
 
 // Passport
 
-initializePassport()
-app.use(passport.initialize())
-app.use(passport.session())
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 

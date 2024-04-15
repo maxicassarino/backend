@@ -12,7 +12,9 @@
         <h1>Perfil</h1>
         <ul>
             <li>Nombre: {{user.name}}</li>
-            <li>Apellido: {{user.lastname}}</li>
+            {{#if user.lastname}}
+                <li>Apellido: {{user.lastname}}</li>
+            {{/if}}
             <li>Email: {{user.email}}</li>
             {{#if isAdmin}}
                 <li>Rol: Administrador</li>
