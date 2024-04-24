@@ -11,6 +11,7 @@ class Cart {
         }
     }
 
+    
     getById = async (id) => {
         try {
             return await cartModel.findById(id);
@@ -18,6 +19,7 @@ class Cart {
             throw new Error("Error al obtener producto del carrito por ID");
         }
     }
+
 
     create = async () => {
         try {
@@ -29,11 +31,28 @@ class Cart {
 
     update = async (cartId, newProducts) => {
         try {
-            return await cartModel.updateOne({ _id: cartId }, { productos: newProducts });
+            const cart = await cartModel.findById(cartId);
+            const existingProducts = cart.productos;
+    
+            // Actualizar la cantidad de productos existentes y agregar nuevos productos si no existen
+            newProducts.forEach(newProduct => {
+                const existingProductIndex = existingProducts.findIndex(product => product.id === newProduct.id);
+                if (existingProductIndex !== -1) {
+                    // Si el producto ya existe en el carrito, actualizar la cantidad
+                    existingProducts[existingProductIndex].quantity += newProduct.quantity;
+                } else {
+                    // Si el producto no existe en el carrito, agregarlo
+                    existingProducts.push(newProduct);
+                }
+            });
+    
+            // Actualizar el carrito con los productos combinados
+            return await cartModel.updateOne({ _id: cartId }, { productos: existingProducts });
         } catch (error) {
             throw new Error("Error al actualizar el carrito de compras");
         }
     }
+
 
     updateCartItemQuantity = async (cartId, productId, quantity) => {
         try {
@@ -52,6 +71,7 @@ class Cart {
         }
     }
 
+
     delete = async (cartId) => {
         try {
             return await cartModel.deleteOne({ _id: cartId });
@@ -59,6 +79,7 @@ class Cart {
             throw new Error("Error al eliminar carrito");
         }
     }
+
 
     deleteCartItem = async (cartId, productId) => {
         try {

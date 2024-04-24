@@ -20,10 +20,20 @@ class Cart {
     }
 
     update = (cartId, newProducts) => {
-        const index = this.data.findIndex(cart => cart.id === cartId);
-        if (index !== -1) {
-            this.data[index].productos = newProducts;
-            return this.data[index];
+        const cart = this.getById(cartId);
+        if (cart) {
+            // Combinar los productos existentes con los nuevos
+            newProducts.forEach(newProduct => {
+                const existingProductIndex = cart.productos.findIndex(product => product.id === newProduct.id);
+                if (existingProductIndex !== -1) {
+                    // Si el producto ya existe en el carrito, actualizar la cantidad
+                    cart.productos[existingProductIndex].quantity += newProduct.quantity;
+                } else {
+                    // Si el producto no existe en el carrito, agregarlo
+                    cart.productos.push(newProduct);
+                }
+            });
+            return cart;
         } else {
             throw new Error("Carrito no encontrado");
         }
