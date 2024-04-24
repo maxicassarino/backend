@@ -1,6 +1,7 @@
 import express from 'express';
-import Cart from '../dao/mongo/carts.mongo.js';
+// import Cart from '../dao/mongo/carts.mongo.js';
 // import Cart from '../dao/memory/carts.memory.js';
+import { Cart } from '../dao/factory.js';
 
 const router = express.Router()
 

@@ -13,7 +13,7 @@ import usersRouter from './routes/users.router.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
-import initializePassport from './public/js/passport.config.js';
+import initializePassport from './public/passport.config.js';
 import cookieParser from 'cookie-parser';
 
 

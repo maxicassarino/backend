@@ -1,6 +1,6 @@
 import express from 'express';
 import usersModel from '../model/users.model.js';
-import { createHash, isValidatePassword } from '../public/js/utils.js';
+import { createHash, isValidatePassword } from '../public/utils.js';
 import passport from 'passport';
 
 const router = express.Router()
