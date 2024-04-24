@@ -4,8 +4,6 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import multer from 'multer';
 import handlebars from 'express-handlebars'
-import { Server } from 'socket.io';
-import mongoose from 'mongoose';
 import productRouter from "./routes/products.router.js"
 import cartRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
@@ -61,7 +59,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
 // Rutas
 
 app.use('/', productRouter);
@@ -69,12 +66,13 @@ app.use('/', cartRouter);
 app.use('/', viewsRouter);
 app.use('/', usersRouter);
 
-app.get('/descargas', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'uploadFiles.html'));
-});
 
 
 // Descargas
+
+app.get('/descargas', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'uploadFiles.html'));
+});
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -97,22 +95,4 @@ app.post('/upload', upload.single('file'), (req, res) => {
 // Puerto
 
 const PORT = 8080;
-const httpServer = app.listen(PORT, () => console.log(`Server funcionando en puerto ${PORT}`));
-
-
-// Socket.io
-
-const socketServer = new Server(httpServer)
-
-socketServer.on('connection', async (socket) => {
-    console.log("Nueva Conexión")
-});
-
-
-// MONGOOUSE
-
-const enviroment = async () => {
-    await mongoose.connect("mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/shop?retryWrites=true&w=majority&appName=coder")
-    console.log("Conectado a Base de Datos")
-}
-enviroment()
+app.listen(PORT, () => console.log(`Server funcionando en puerto ${PORT}`));
