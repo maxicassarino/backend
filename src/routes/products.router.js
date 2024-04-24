@@ -1,8 +1,8 @@
 import express from 'express';
-import Products from '../dao/mongo/products.mongo.js';
-// import Products from '../dao/memory/products.memory.js';
+import { Products } from '../dao/factory.js';
 
 const router = express.Router();
+
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
