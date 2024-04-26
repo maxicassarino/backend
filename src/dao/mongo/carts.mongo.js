@@ -20,9 +20,9 @@ class Cart {
     }
 
     
-    create = async () => {
+    create = async (email) => {
         try {
-            return await cartModel.create({});
+            return await cartModel.create({email});
         } catch (error) {
             throw new Error("Error al crear carrito");
         }

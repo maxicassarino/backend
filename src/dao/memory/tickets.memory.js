@@ -12,11 +12,11 @@ class Tickets {
         return this.data.find(ticket => ticket.id === id);
     }
 
-    async create(amount) {
+    async create(amount, email) {
         const newId = this.nextId++;
         const code = this.generateTicketCode(); 
         const currentDate = new Date();
-        const newTicket = { id: newId, code, currentDate, amount };
+        const newTicket = { id: newId, code, email, currentDate, amount };
         this.data.push(newTicket);
         return newTicket;
     }

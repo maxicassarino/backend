@@ -19,10 +19,10 @@ class Tickets {
         }
     }
 
-    async create(amount) {
+    async create(amount, email) {
         try {
             const code = this.generateTicketCode();
-            return await ticketModel.create({ code, amount });
+            return await ticketModel.create({ code, email, amount });
         } catch (error) {
             throw new Error("Error al agregar ticket");
         }

@@ -27,7 +27,8 @@ const cartController = {
 
     createCart: async (req, res) => {
         try {
-            const result = await cartService.create();
+            const email = req.session.user.email
+            const result = await cartService.create(email);
             res.json({ success: true, data: result });
         } catch (error) {
             res.status(500).json({ success: false, error: error.message });
@@ -114,7 +115,7 @@ const cartController = {
 
 
             // Crear un ticket con los productos comprados
-            await ticketService.create(totalPrice);
+            await ticketService.create(totalPrice, cart.email);
 
 
             if (failedProducts.length > 0) {

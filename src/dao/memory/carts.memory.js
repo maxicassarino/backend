@@ -13,9 +13,9 @@ class Cart {
         return this.data.find(cart => cart.id === parsedId);
     }
 
-    create = () => {
+    create = (email) => {
         const newId = this.nextId++;
-        const newCart = { id: newId, productos: [] };
+        const newCart = { id: newId, email: email, productos: [] };
         this.data.push(newCart);
         return newCart;
     }
