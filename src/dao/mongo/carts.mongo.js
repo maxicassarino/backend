@@ -11,7 +11,6 @@ class Cart {
         }
     }
 
-    
     getById = async (id) => {
         try {
             return await cartModel.findById(id);
@@ -20,7 +19,7 @@ class Cart {
         }
     }
 
-
+    
     create = async () => {
         try {
             return await cartModel.create({});

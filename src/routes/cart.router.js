@@ -23,5 +23,7 @@ router.delete('/cart/:cid', cartController.deleteCart);
 
 router.delete('/cart/:cid/:pid', cartController.deleteCartItem);
 
+router.post('/cart/:cid/purchase', cartController.purchaseCart);
+
 
 export default router;

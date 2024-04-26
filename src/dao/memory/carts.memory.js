@@ -1,7 +1,7 @@
 class Cart {
     constructor() {
         this.data = [];
-        this.nextId = 0;
+        this.nextId = 1;
     } 
 
     get = () => {
@@ -9,7 +9,8 @@ class Cart {
     }
 
     getById = (id) => {
-        return this.data.find(cart => cart.id === id);
+        const parsedId = parseInt(id);
+        return this.data.find(cart => cart.id === parsedId);
     }
 
     create = () => {
@@ -19,8 +20,8 @@ class Cart {
         return newCart;
     }
 
-    update = (cartId, newProducts) => {
-        const cart = this.getById(cartId);
+    update = (cid, newProducts) => {
+        const cart = this.getById(cid);
         if (cart) {
             // Combinar los productos existentes con los nuevos
             newProducts.forEach(newProduct => {

@@ -8,11 +8,13 @@ import productRouter from "./routes/products.router.js"
 import cartRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
 import usersRouter from './routes/users.router.js';
+import ticketsRouter from './routes/tickets.router.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import initializePassport from './public/passport.config.js';
 import cookieParser from 'cookie-parser';
+import mongoose from 'mongoose';
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -65,6 +67,7 @@ app.use('/', productRouter);
 app.use('/', cartRouter);
 app.use('/', viewsRouter);
 app.use('/', usersRouter);
+app.use('/', ticketsRouter);
 
 
 
@@ -96,3 +99,15 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 const PORT = 8080;
 app.listen(PORT, () => console.log(`Server funcionando en puerto ${PORT}`));
+
+
+// Mongo
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect("mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/sessions?retryWrites=true&w=majority&appName=coder")
+    }catch (error) {
+        console.log("el error es " + error)
+    }
+};
+connectDB()
