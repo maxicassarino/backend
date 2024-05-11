@@ -1,4 +1,7 @@
 import { Products } from '../dao/factory.js';
+import CustomError from '../services/errors/CustomError.js';
+import EErrors from "../services/errors/enums.js";
+import { generateProductErrorInfo } from '../services/errors/info.js'
 
 const productService = new Products();
 
@@ -27,8 +30,16 @@ const productController = {
     },
 
     createProduct: async (req, res) => {
+        const { title, category, price, stock } = req.body;
+            if (!title || !category || !price || !stock) {
+                CustomError.createError({
+                    name: "Error en el registro de producto",
+                    cause: generateProductErrorInfo({ title, category, price, stock }),
+                    message: "Falta de datos",
+                    code: EErrors.INVALID_TYPES_PRODUCTERROR
+                })
+            }
         try {
-            const { title, category, price, stock } = req.body;
             const newProduct = await productService.create(title, category, price, stock);
             res.json({ success: true, data: newProduct });
         } catch (error) {

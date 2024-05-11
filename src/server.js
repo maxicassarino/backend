@@ -15,12 +15,17 @@ import passport from 'passport';
 import initializePassport from './public/passport.config.js';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
+import { config } from 'dotenv';
+import nodemailer from 'nodemailer';
+import errorHandle from './middlewares/errors/index.js'
+// import compression from 'express-compression';
 
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const app = express()
+config()
 
 
 // Middlewares
@@ -70,6 +75,15 @@ app.use('/', usersRouter);
 app.use('/', ticketsRouter);
 
 
+// Errors
+
+app.use(errorHandle)
+
+
+// Compression
+
+// app.use(compression({brotli: {enable: true, zlib: {}}}))
+
 
 // Descargas
 
@@ -111,3 +125,31 @@ const connectDB = async () => {
     }
 };
 connectDB()
+
+
+// Mail
+
+const transport = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD,
+    }
+})
+
+app.get('/mail', async (req, res) => {
+    const result = await transport.sendMail({
+        from: `Correo de prueba <${process.env.MAIL_USERNAME}>`,
+        to: `${process.env.MAIL_USERNAME}`,
+        subject: "Correo de Prueba",
+        html: `<div>
+                    <h1>Correo TEST</h1>
+                </div>`,
+        attachments: []
+    })
+    res.send("Correo enviado")
+})
+
