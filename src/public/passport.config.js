@@ -37,16 +37,16 @@ const initializePassport = () => {
 
     passport.use('register', new localStrategy (
         {passReqToCallback: true, usernameField: "email"}, async(req, username, contraseña, done) => {
-            const {name, lastname, email, password} = req.body 
-            if (!name || !lastname || !email || !password) {
-                CustomError.createError({
-                    name: "Error en el registro de usuario",
-                    cause: generateUserErrorInfo({name, lastname, email, password}),
-                    message: "Falta de datos",
-                    code: EErrors.INVALID_TYPES_USERERROR
-                })
-            }
             try {
+                const {name, lastname, email, password} = req.body 
+                if (!name || !lastname || !email || !password) {
+                    CustomError.createError({
+                        name: "Error en el registro de usuario",
+                        cause: generateUserErrorInfo({name, lastname, email, password}),
+                        message: "Falta de datos",
+                        code: EErrors.INVALID_TYPES_USERERROR
+                    })
+                }
                 let user = await usersModel.findOne({email: username})
                 if (user) {
                     return res.redirect('/login?error=existingUser');
@@ -55,7 +55,7 @@ const initializePassport = () => {
                 let result = await usersModel.create(newUser)
                 return done(null, result)
             } catch (error){
-                return done("Error al obtener el usuario: " + error)
+                return done("Error al obtener el usuario: " + error);
             }
     }))
 

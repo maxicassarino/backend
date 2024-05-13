@@ -19,6 +19,8 @@ import { config } from 'dotenv';
 import nodemailer from 'nodemailer';
 import errorHandle from './middlewares/errors/index.js'
 // import compression from 'express-compression';
+// import { addLogger } from './config/logger.js';
+import { addLogger } from './config/logger-entorno.js';
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -153,3 +155,12 @@ app.get('/mail', async (req, res) => {
     res.send("Correo enviado")
 })
 
+
+// Logger
+
+app.use(addLogger)
+
+app.get("/loggerTest", (req, res) => {
+    req.logger.error(`Error!!!, ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+    res.send({ message: "Inicio" });
+});

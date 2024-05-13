@@ -30,7 +30,8 @@ const productController = {
     },
 
     createProduct: async (req, res) => {
-        const { title, category, price, stock } = req.body;
+        try {
+            const { title, category, price, stock } = req.body;
             if (!title || !category || !price || !stock) {
                 CustomError.createError({
                     name: "Error en el registro de producto",
@@ -39,11 +40,10 @@ const productController = {
                     code: EErrors.INVALID_TYPES_PRODUCTERROR
                 })
             }
-        try {
             const newProduct = await productService.create(title, category, price, stock);
             res.json({ success: true, data: newProduct });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            res.status(500).json({ name: error.name, error: error.message , code: error.code, cause: error.cause});
         }
     },
 
