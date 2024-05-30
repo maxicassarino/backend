@@ -11,7 +11,7 @@ const cartController = {
             const result = await cartService.get();
             res.json({ success: true, data: result });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -21,7 +21,7 @@ const cartController = {
             const result = await cartService.getById(id);
             res.json({ success: true, data: result });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -31,7 +31,7 @@ const cartController = {
             const result = await cartService.create(email);
             res.json({ success: true, data: result });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -42,7 +42,7 @@ const cartController = {
             const result = await cartService.update(cid, newProducts);
             res.json({ success: true, data: result });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -53,7 +53,7 @@ const cartController = {
             const result = await cartService.updateCartItemQuantity(cid, pid, quantity);
             res.json({ success: true, data: result });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -63,7 +63,7 @@ const cartController = {
             const result = await cartService.delete(cid);
             res.json({ success: true, data: result });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -73,7 +73,7 @@ const cartController = {
             const result = await cartService.deleteCartItem(cid, pid);
             res.json({ success: true, data: result });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -129,7 +129,7 @@ const cartController = {
 
             res.json({ success: true, message: "Compra realizada exitosamente", failedProducts });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     }
 };

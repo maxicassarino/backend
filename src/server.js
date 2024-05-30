@@ -19,8 +19,9 @@ import { config } from 'dotenv';
 import nodemailer from 'nodemailer';
 import errorHandle from './middlewares/errors/index.js'
 // import compression from 'express-compression';
-// import { addLogger } from './config/logger.js';
-import { addLogger } from './config/logger-entorno.js';
+import { addLogger } from './config/logger.js';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -28,6 +29,20 @@ const __dirname = dirname(__filename)
 
 const app = express()
 config()
+
+const swaggerOptions = {
+    definition: {
+        openai: '3.0.1',
+        info: {
+            title: "Documentacion",
+            description: "API pensada para la clase Swagger"
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerJsdoc(swaggerOptions);
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 
 // Middlewares
@@ -60,6 +75,17 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+
+// Logger
+
+app.use(addLogger)
+
+app.get("/loggerTest", (req, res) => {
+    req.logger.warning(`Error!!!, ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
+    res.send({ message: "Inicio" });
+});
+
 
 // Passport
 
@@ -154,13 +180,3 @@ app.get('/mail', async (req, res) => {
     })
     res.send("Correo enviado")
 })
-
-
-// Logger
-
-app.use(addLogger)
-
-app.get("/loggerTest", (req, res) => {
-    req.logger.error(`Error!!!, ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`);
-    res.send({ message: "Inicio" });
-});

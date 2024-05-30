@@ -11,7 +11,7 @@ const productController = {
             const products = await productService.get();
             res.json({ success: true, data: products });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -25,7 +25,7 @@ const productController = {
                 res.json({ success: true, data: product });
             }
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -43,7 +43,7 @@ const productController = {
             const newProduct = await productService.create(title, category, price, stock);
             res.json({ success: true, data: newProduct });
         } catch (error) {
-            res.status(500).json({ name: error.name, error: error.message , code: error.code, cause: error.cause});
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -58,7 +58,7 @@ const productController = {
                 res.json({ success: true, data: updatedProduct });
             }
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -72,7 +72,7 @@ const productController = {
                 res.json({ success: true, message: "Producto eliminado exitosamente" });
             }
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     }
 };

@@ -8,7 +8,7 @@ const ticketsController = {
             const tickets = await ticketService.get();
             res.json({ success: true, data: tickets });
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     },
 
@@ -22,7 +22,7 @@ const ticketsController = {
                 res.json({ success: true, data: ticket });
             }
         } catch (error) {
-            res.status(500).json({ success: false, error: error.message });
+            req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
         }
     }
 };

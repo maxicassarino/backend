@@ -31,8 +31,7 @@ const renderHome = async (req, res) => {
         res.render('home', { products, hasPrevPage: result.hasPrevPage, page, hasNextPage: result.hasNextPage, prevLink: result.prevLink, nextLink: result.nextLink, user: req.session.user });
 
     } catch (error) {
-        console.error("Error al obtener productos en tiempo real: ", error);
-        res.status(500).json({ error: 'Error al obtener productos en tiempo real.' });
+        req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
     }
 };
 
@@ -58,8 +57,7 @@ const renderRealTimeProducts = async (req, res) => {
         res.render('realTimeProducts', { products, hasPrevPage: result.hasPrevPage, page: page, hasNextPage: result.hasNextPage, prevLink: result.prevLink, nextLink: result.nextLink });
     
     } catch (error) {
-        console.error("Error al obtener productos en tiempo real: ", error);
-        res.status(500).json({ error: 'Error al obtener productos en tiempo real.' });
+        req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
     }
 };
 

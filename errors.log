@@ -1,1 +1,8 @@
 {"level":"warn","message":"Esto es una alerta"}
+{"level":"warning","message":"Error!!!, GET en /loggerTest - 30/5/2024"}
+{"level":"error","message":"Error, GET en /cart/dd - Error al obtener producto del carrito por ID"}
+{"level":"error","message":"Error, GET en /cart/dd - Error al obtener producto del carrito por ID"}
+{"level":"error","message":"Error, GET en /cart/dd - Error al obtener producto del carrito por ID"}
+{"level":"error","message":"Error, GET en /cart/dd - Error al obtener producto del carrito por ID"}
+{"level":"error","message":"Error, GET en /cart/dd - req is not defined"}
+{"level":"error","message":"Error, GET en /cart/dd - Error al obtener producto del carrito por ID"}

@@ -3,3 +3,5 @@
 {"level":"error","message":"Alerta: GET en /logger - 13/5/2024"}
 {"level":"error","message":"Alerta: GET en /logger - 13/5/2024"}
 {"level":"error","message":"Error!!!, GET en /logger - 13/5/2024"}
+{"level":"error","message":"Error!!!, GET en /loggerTest - 30/5/2024"}
+{"level":"warn","message":"Error!!!, GET en /loggerTest - 30/5/2024"}
