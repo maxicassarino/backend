@@ -1,0 +1,30 @@
+paths:
+  /tickets:
+    get:
+      summary: "Obtiene todos los tickets."
+      tags: 
+        - Ticket
+      responses:
+        "Error":
+          description: "Error al obtener tickets."
+    post:
+      summary: "Crea un nuevo ticket."
+      tags:
+        - Ticket
+      responses:
+        "Error":
+          description: "Error al crear un nuevo ticket."
+  /tickets/{id}:
+    get:
+      summary: "Obtiene un ticket por ID."
+      tags: 
+        - Ticket
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "Error":
+          description: "Error al obtener ticket por ID."

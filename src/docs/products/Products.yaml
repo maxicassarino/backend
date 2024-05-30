@@ -1,0 +1,62 @@
+paths:
+  /products:
+    get:
+      summary: "Obtiene todos los productos."
+      tags: 
+        - Product
+      responses:
+        "Error":
+          description: "Error al obtener productos."
+    post:
+      summary: "Crea un nuevo producto."
+      tags:
+        - Product
+      responses:
+        "Error":
+          description: "Error al crear un nuevo producto."
+  /products/{id}:
+    get:
+      summary: "Obtiene un producto por ID."
+      tags: 
+        - Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "Error":
+          description: "Error al obtener producto por ID."
+    put:
+      summary: "Actualiza un producto por ID."
+      tags:
+        - Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "Error":
+          description: "Error al actualizar producto por ID."
+    delete:
+      summary: "Elimina un producto por ID."
+      tags:
+        - Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "Error":
+          description: "Error al eliminar producto por ID."

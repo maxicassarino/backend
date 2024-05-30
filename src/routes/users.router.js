@@ -32,8 +32,7 @@ router.get('/profile', async (req, res) => {
                 isAdmin: false,
         })}
     } catch (error) {
-        console.error("Error al obtener usuario: ", error);
-        res.status(500).json({ error: 'Error al obtener usuario.' });
+        req.logger.error(`Error, ${req.method} en ${req.url} - Error al obtener usuario.`);
     }
 });
 
@@ -91,8 +90,7 @@ router.post('/reset-password', async (req, res) => {
         // Redirigir a la página de login con un mensaje de éxito
         res.redirect('/login?success=passwordReset');
     } catch (error) {
-        console.error("Error al restaurar contraseña: ", error);
-        res.status(500).json({ error: 'Error al restaurar contraseña.' });
+        req.logger.error(`Error, ${req.method} en ${req.url} - Error al restaurar contraseña.`);
     }
 });
 

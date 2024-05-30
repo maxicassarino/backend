@@ -15,11 +15,11 @@ router.get('/cart/:id', cartController.getCartById);
 
 router.post('/cart', cartController.createCart);
 
-router.put('/cart/:cid', cartController.updateCart);
+router.put('/cart/:id', cartController.updateCart);
 
 router.put('/cart/:cid/:pid', cartController.updateCartItemQuantity);
 
-router.delete('/cart/:cid', cartController.deleteCart);
+router.delete('/cart/:id', cartController.deleteCart);
 
 router.delete('/cart/:cid/:pid', cartController.deleteCartItem);
 

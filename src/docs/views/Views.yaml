@@ -1,0 +1,23 @@
+paths:
+  /:
+    get:
+      summary: "Renderiza la página de inicio."
+      tags: 
+        - View
+      responses:
+        "Error":
+          description: "Error al renderizar la página de inicio."
+  /realtimeproducts:
+    get:
+      summary: "Renderiza la página de productos en tiempo real."
+      tags: 
+        - View
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "Error":
+          description: "Error al renderizar la página de productos en tiempo real."

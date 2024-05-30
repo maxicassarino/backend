@@ -37,9 +37,9 @@ const cartController = {
 
     updateCart: async (req, res) => {
         try {
-            const { cid } = req.params;
+            const { id } = req.params;
             const newProducts = req.body;
-            const result = await cartService.update(cid, newProducts);
+            const result = await cartService.update(id, newProducts);
             res.json({ success: true, data: result });
         } catch (error) {
             req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);
@@ -59,8 +59,8 @@ const cartController = {
 
     deleteCart: async (req, res) => {
         try {
-            const { cid } = req.params;
-            const result = await cartService.delete(cid);
+            const { id } = req.params;
+            const result = await cartService.delete(id);
             res.json({ success: true, data: result });
         } catch (error) {
             req.logger.error(`Error, ${req.method} en ${req.url} - ${error.message}`);

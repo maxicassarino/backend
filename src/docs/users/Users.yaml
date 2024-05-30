@@ -1,0 +1,78 @@
+paths:
+  /profile:
+    get:
+      summary: "Renderiza la página de perfil del usuario."
+      tags: 
+        - User
+      responses:
+        "Error":
+          description: "Error al renderizar la página de perfil del usuario."
+  /login:
+    get:
+      summary: "Renderiza la página de inicio de sesión."
+      tags: 
+        - Auth
+      responses:
+        "Error":
+          description: "Error al renderizar la página de inicio de sesión."
+    post:
+      summary: "Inicia sesión de usuario."
+      tags:
+        - Auth
+      responses:
+        "Error":
+          description: "Error al iniciar sesión de usuario."
+  /register:
+    get:
+      summary: "Renderiza la página de registro."
+      tags: 
+        - Auth
+      responses:
+        "Error":
+          description: "Error al renderizar la página de registro."
+    post:
+      summary: "Registra un nuevo usuario."
+      tags:
+        - Auth
+      responses:
+        "Error":
+          description: "Error al registrar un nuevo usuario."
+  /logout:
+    post:
+      summary: "Cierra sesión de usuario."
+      tags:
+        - Auth
+      responses:
+        "Error":
+          description: "Error al cerrar sesión de usuario."
+  /reset-password:
+    get:
+      summary: "Renderiza la página de restablecimiento de contraseña."
+      tags: 
+        - Auth
+      responses:
+        "Error":
+          description: "Error al renderizar la página de restablecimiento de contraseña."
+    post:
+      summary: "Restablece la contraseña del usuario."
+      tags:
+        - Auth
+      responses:
+        "Error":
+          description: "Error al restablecer la contraseña del usuario."
+  /github:
+    get:
+      summary: "Inicia sesión con GitHub."
+      tags: 
+        - Auth
+      responses:
+        "Error":
+          description: "Error al iniciar sesión con GitHub."
+  /githubcallback:
+    get:
+      summary: "Callback de inicio de sesión con GitHub."
+      tags: 
+        - Auth
+      responses:
+        "Error":
+          description: "Error en el callback de inicio de sesión con GitHub."
