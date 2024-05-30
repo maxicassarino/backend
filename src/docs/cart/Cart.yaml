@@ -1,0 +1,119 @@
+paths:
+  /cart:
+    get:
+      summary: "Obtiene todos los carritos."
+      tags: 
+        - Cart
+      responses:
+        "Error":
+          description: "Error al obtener carritos."
+    post:
+      summary: "Crea un nuevo carrito."
+      tags:
+        - Cart
+      responses:
+        "Error":
+          description: "Error al crear un nuevo carrito."
+  /cart/{id}:
+    get:
+      summary: "Obtiene los productos del carrito por ID."
+      tags: 
+        - Cart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "Error":
+          description: "Error al obtener productos del carrito por ID."
+    put:
+      summary: "Actualiza los productos del carrito por ID."
+      tags:
+        - Cart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "Error":
+          description: "Error al actualizar productos del carrito por ID."
+    delete:
+      summary: "Elimina un carrito por ID."
+      tags:
+        - Cart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "Error":
+          description: "Error al eliminar un carrito por ID."
+  /cart/{cid}/{pid}:
+    put:
+      summary: "Actualiza la cantidad de un producto en el carrito."
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "Error":
+          description: "Error al actualizar la cantidad del producto en el carrito."
+    delete:
+      summary: "Elimina un producto del carrito."
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "Error":
+          description: "Error al eliminar el producto del carrito."
+  /cart/{cid}/purchase:
+    post:
+      summary: "Realiza la compra de un carrito."
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "Error":
+          description: "Error al realizar la compra del carrito."

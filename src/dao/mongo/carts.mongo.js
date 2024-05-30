@@ -7,7 +7,7 @@ class Cart {
         try {
             return await cartModel.find();
         } catch (error) {
-            throw new Error("Error al obtener productos del carrito.");
+            throw new Error("Error al obtener los carritos.");
         }
     }
 
@@ -15,7 +15,7 @@ class Cart {
         try {
             return await cartModel.findById(id);
         } catch (error) {
-            throw new Error("Error al obtener producto del carrito por ID");
+            throw new Error("Error al obtener el carrito por ID");
         }
     }
 
