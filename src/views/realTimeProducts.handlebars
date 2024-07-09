@@ -24,12 +24,19 @@
         <h1>Lista de Productos en Tiempo Real</h1>
         <ol id="productList">
             {{#each products}}
+                <br>
                 <li>{{this.title}}</li>
                 <br>
                 <ul>
                     <li>{{this.category}}</li>
                     <li>Precio: ${{this.price}}</li>
                 </ul>
+                <br>
+                <form action="/payment" method="POST">
+                    <input type="hidden" name="title" value="{{this.title}}">
+                    <input type="hidden" name="price" value="{{this.price}}">
+                    <button type="submit">Finalizar Compra</button>
+                </form>
                 <br>
             {{/each}}
         </ol>

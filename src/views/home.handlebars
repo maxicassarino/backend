@@ -13,12 +13,18 @@
         <h2>Lista de Productos</h2>
         <ol>
             {{#each products}}
+                <br>
                 <li>{{this.title}}</li>
                 <br>
                 <ul>
                     <li>{{this.category}}</li>
                     <li>Precio: ${{this.price}}</li>
                 </ul>
+                <br>
+                <form action="/payment" method="POST">
+                    <input type="hidden" name="price" value="{{this.price}}">
+                    <button type="submit">Finalizar Compra</button>
+                </form>
                 <br>
             {{/each}}
         </ol>

@@ -22,6 +22,8 @@ import errorHandle from './middlewares/errors/index.js'
 import { addLogger } from './config/logger.js';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express';
+import cors from 'cors';
+import paymentsRouter from './routes/payments.router.js';
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -94,6 +96,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+// Payments
+
+app.use(cors())
+
+
 // Rutas
 
 app.use('/', productRouter);
@@ -101,6 +108,7 @@ app.use('/', cartRouter);
 app.use('/', viewsRouter);
 app.use('/', usersRouter);
 app.use('/', ticketsRouter);
+app.use('/', paymentsRouter);
 
 
 // Errors
@@ -180,3 +188,4 @@ app.get('/mail', async (req, res) => {
     })
     res.send("Correo enviado")
 })
+
