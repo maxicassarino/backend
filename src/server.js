@@ -68,7 +68,7 @@ app.set('view engine', "handlebars");
 app.use(cookieParser());
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URL,
+        mongoUrl: "mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/sessions?retryWrites=true&w=majority&appName=coder",
         ttl: 60
     }),
     secret: "12345",
@@ -139,7 +139,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 // Puerto
 
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 app.listen(PORT, () => console.log(`Server funcionando en puerto ${PORT}`));
 
 
@@ -147,7 +147,7 @@ app.listen(PORT, () => console.log(`Server funcionando en puerto ${PORT}`));
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URL)
+        await mongoose.connect("mongodb+srv://maximocassarino:123452024@coder.cwgcrt2.mongodb.net/sessions?retryWrites=true&w=majority&appName=coder")
     }catch (error) {
         console.log("el error es " + error)
     }
